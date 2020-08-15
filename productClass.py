@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Aug 15 14:49:35 2020
+class productClass:
 
-@author: Admin
-"""
-
+    def __init__(self, productName, description, imageUrl):
+        self.name = productName
+        self.description = description
+        self.imageArray = imageUrl
+        self.location = productName
