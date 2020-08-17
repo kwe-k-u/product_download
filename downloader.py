@@ -27,7 +27,6 @@ def callApi(link):
         for count in range(len(product["Images"])):
             temp.addImage(count, product["Images"]["Image"][count])
         productList.append( temp )
-    print(len(productList))
 
 #This creates the directory in which the files will be saved
 def createDirectory( prod = "jumia"):
@@ -50,17 +49,16 @@ def createDirectory( prod = "jumia"):
 
 
 
-    #Downloads and saves the images from the product object
-def downloadImage(product):
-    path = os.getcwd()
-    #Looping through the image urls to download and save the images
-    for index in product.getImages():
-        url.urlretrieve(product.getImages()[index], path + "\\" + str(index) +".jpg")
+#Downloads and saves the images from the product object
+def downloadImage(prod):
 
-    #Create a text file to hold the product description
-
-    #Create a text file to hold the product highlights
-
+    for im in prod.imageArray:
+        print(len(prod.imageArray))
+        try:
+            image = requests.get(prod.imageArray[im], stream=True)
+            open("{0}.jpg".format(im),"wb").write(image.content)
+        except:
+            print("Error")
 
 
 
