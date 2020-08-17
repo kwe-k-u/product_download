@@ -2,11 +2,15 @@ class productClass:
 
     def __init__(self, productName, description, highlight):
         self.name = productName.replace("/","")
-        nam = ""
-        nam.replace
+        self.imageArray = {}
         self.description = description
         self.highlight = highlight
-        self.imageArray = { }#todo do the filling later
+
+
+
+    #allows for image urls to be added to the imageArray dictionary
+    def addImage(self, index, url):
+        self.imageArray[int(index)] = url
 
 
     #returns the product name

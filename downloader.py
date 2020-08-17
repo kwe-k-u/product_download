@@ -23,24 +23,28 @@ def callApi(link):
         description = product["Description"]
         highlight = product ["ProductData"]["ShortDescription"]
 
-        productList.append( productClass(name,description, highlight) )
+        temp = productClass(name,description, highlight)
+        for count in range(len(product["Images"])):
+            temp.addImage(count, product["Images"]["Image"][count])
+        productList.append( temp )
     print(len(productList))
 
 #This creates the directory in which the files will be saved
-def createDirectory( folder = "jumia"):
+def createDirectory( prod = "jumia"):
     #Change the working directory
     os.chdir("C:\\Users\\Admin\\Desktop")
 
     #Create the directory if it doesn't already exist
-    if os.path.exists( os.path.join(os.getcwd(),"images\\{0}".format(folder)) ):
+    if os.path.exists( os.path.join(os.getcwd(),"images\\{0}".format(prod.getName())) ):
        print("exists")
     else:
-        os.makedirs( os.path.join(os.getcwd(),"images\\{0}".format(folder)) )
+        os.makedirs( os.path.join(os.getcwd(),"images\\{0}".format(prod.getName() )) )
 
-    path = os.path.join(os.getcwd(),"images\\{0}".format(folder))
+    path = os.path.join(os.getcwd(),"images\\{0}".format(prod.getName() ))
     os.chdir(path)
-    createFile("highlights","something good about product")
-    createFile("description","something good about product")
+    createFile("highlights",prod.getHighlight())
+    createFile("description",prod.getDescription())
+    downloadImage(prod)
 
 
 
@@ -61,9 +65,12 @@ def downloadImage(product):
 
 
 def createFile(title, description):
-    file = open("{0}.txt".format(title), "w")
-    file.write(description)
-    file.close()
+    try:
+        file = open("{0}.txt".format(title), "w")
+        file.write(description)
+        file.close()
+    except:
+        print()
 
 
 
@@ -79,7 +86,7 @@ def main():
 
     #create the directory to hold the files and save the files
     for im in productList:
-        createDirectory(im.getName())
+        createDirectory(im)
 
 
 
