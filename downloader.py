@@ -1,12 +1,33 @@
 import os
 from productClass import *
 import urllib.request as url
+import json
+import requests
 
 
-images = ["samsung", "infinix", "twitter"]
+productList = []
+jsonData = ""
+
+
+#This makes a call to the api and retrieves the json data
+def callApi(link):
+    #todo make a call to url and save the json in urlResponse
+    urlResponse = requests.get(link)
+    jsonData = json.loads(urlResponse.text)
+
+
+    #Separating individual product json into list
+    for product in jsonData["SuccessResponse"]["Body"]["Products"]["Product"] :
+
+        name = product["Name"]
+        description = product["Description"]
+        highlight = product ["ProductData"]["ShortDescription"]
+
+        productList.append( productClass(name,description, highlight) )
+    print(len(productList))
 
 #This creates the directory in which the files will be saved
-def createDirectory(folder = "jumia"):
+def createDirectory( folder = "jumia"):
     #Change the working directory
     os.chdir("C:\\Users\\Admin\\Desktop")
 
@@ -19,6 +40,7 @@ def createDirectory(folder = "jumia"):
     path = os.path.join(os.getcwd(),"images\\{0}".format(folder))
     os.chdir(path)
     createFile("highlights","something good about product")
+    createFile("description","something good about product")
 
 
 
@@ -38,10 +60,6 @@ def downloadImage(product):
 
 
 
-
-# =============================================================================
-# def createFile(fileName, text):
-# =============================================================================
 def createFile(title, description):
     file = open("{0}.txt".format(title), "w")
     file.write(description)
@@ -56,14 +74,17 @@ def main():
     print("Process beginning")
 
     #get the product classes from the server
-    print("JSON data received") #add error checking for if it fails
+    mi = input("Enter url: ")
+    callApi(mi) #add error checking for if it fails
 
     #create the directory to hold the files and save the files
-    for im in images:
-        createDirectory(im)
+    for im in productList:
+        createDirectory(im.getName())
+
 
 
     print("done")
+    os.chdir("C:\\Users\\Admin\\Desktop")
 
 
 

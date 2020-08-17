@@ -1,11 +1,12 @@
 class productClass:
 
-    def __init__(self, productName, description):
-        self.name = productName
+    def __init__(self, productName, description, highlight):
+        self.name = productName.replace("/","")
+        nam = ""
+        nam.replace
         self.description = description
-        self.imageArray = { 1: "king",
-                           2: "kinges"
-                }#todo do the filling later
+        self.highlight = highlight
+        self.imageArray = { }#todo do the filling later
 
 
     #returns the product name
@@ -15,6 +16,10 @@ class productClass:
     #return description
     def getDescription(self):
         return self.description
+
+    #return produc highlights
+    def getHighlight(self):
+        return self.highlight
 
     #return images
     def getImages(self, index = -1):
