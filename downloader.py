@@ -28,6 +28,9 @@ def callApi(link):
             temp.addImage(count, product["Images"]["Image"][count])
         productList.append( temp )
 
+
+
+
 #This creates the directory in which the files will be saved
 def createDirectory( prod = "jumia"):
     #Change the working directory
@@ -62,9 +65,12 @@ def downloadImage(prod):
 
 
 
+
+
+
 def createFile(title, description):
     try:
-        file = open("{0}.txt".format(title), "w")
+        file = open("{0}.txt".format(title), "wb")
         file.write(description)
         file.close()
     except:
